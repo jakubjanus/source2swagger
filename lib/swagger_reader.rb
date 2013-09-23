@@ -39,6 +39,18 @@ class SwaggerReader
 
   end
 
+  def analyze_paths(paths, file_extension, comment_str)
+    code = {:code => [], :line_number => [], :file =>[]}
+    paths.each do |path| 
+      fcode = analyze_all_files(path, file_extension, comment_str)
+      [:code, :line_number, :file].each do |lab|
+        code[lab] = code[lab] + fcode[lab]
+      end
+    end
+
+    return code
+  end
+
   def sort_for_vars_declaration(code)
 
     tmp_vars = {:code => [], :line_number => [], :file =>[]}
